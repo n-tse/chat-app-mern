@@ -20,7 +20,7 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <LinkContainer to="/login">
-              <Nav.Link>Login</Nav.Link>
+              <Nav.Link>Log In</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/chat">
               <Nav.Link>Chat</Nav.Link>
