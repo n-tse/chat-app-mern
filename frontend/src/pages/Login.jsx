@@ -9,6 +9,7 @@ function Login() {
         <Col md={6} className="login__background"></Col>
         <Col md={6} className='d-flex flex-direction-column align-items-center justify-content-center'>
           <Form style={{width:"70%"}}>
+            <h1 className='text-center'>Log In</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" />
