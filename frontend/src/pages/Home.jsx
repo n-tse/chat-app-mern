@@ -3,6 +3,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import {BsChatDotsFill} from 'react-icons/bs';
+import './css/Home.css';
 
 
 function Home() {
@@ -20,7 +21,9 @@ function Home() {
           </LinkContainer>
         </div>
       </Col>
+      <Col md={6} className='home__background'></Col>
     </Row>
+    // <div>home</div>
   )
 }
 
