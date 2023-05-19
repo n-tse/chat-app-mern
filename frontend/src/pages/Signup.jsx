@@ -7,14 +7,15 @@ import { BsCloudUploadFill } from "react-icons/bs";
 
 function Signup() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
+    name: "Abc",
+    email: "test@example.com",
+    password: "abc",
   });
 
   const [profilePic, setProfilePic] = useState(null);
   const [picturePreview, setPicturePreview] = useState(null);
   const [hasPicture, setHasPicture] = useState(false);
+  const [isImageUploading, setIsImageUploading] = useState(false);
 
   const validateImg = (e) => {
     const file = e.target.files[0];
@@ -32,8 +33,30 @@ function Signup() {
     setFormData({ ...formData, [target.name]: target.value });
   };
 
-  const handleSignup = (e) => {
+  const uploadImage = async () => {
+    const data = new FormData();
+    data.append('file', profilePic);
+    data.append('upload_preset', 'wlormaj2');
+    try {
+      setIsImageUploading(true);
+      let res = await fetch('https://api.cloudinary.com/v1_1/dvscluwbp/image/upload', {
+        method: 'post',
+        body: data
+      })
+      const urlData = await res.json();
+      setIsImageUploading(false);
+      return urlData.url
+    } catch(e) {
+      setIsImageUploading(false);
+      console.log(e);
+    }
+  }
+
+  const handleSignup = async (e) => {
     e.preventDefault();
+    if(!profilePic) return alert('Please add a profile picture');
+    const url = await uploadImage(profilePic);
+    console.log("cloudinary image upload url:", url)
     alert(
       `signed up with: name ${formData.name}, email ${formData.email}, password ${formData.password}`
     );
