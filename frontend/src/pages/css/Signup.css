@@ -36,7 +36,7 @@
 .edit-image-textprompt {
   position: absolute;
   top: 0;
-  bottom: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
@@ -48,9 +48,19 @@
   opacity: 0;
   font-size: 1.1em;
   color: white;
+  z-index: 1;
 }
 
 .edit-image-textprompt:hover {
   opacity: 1;
+}
+
+.edit-image-upload-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
   cursor: pointer;
 }
