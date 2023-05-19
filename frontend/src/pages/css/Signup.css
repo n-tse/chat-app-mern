@@ -32,3 +32,25 @@
   cursor: pointer;
   z-index: 1;
 }
+
+.edit-image-textprompt {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  font-size: 1.1em;
+  color: white;
+}
+
+.edit-image-textprompt:hover {
+  opacity: 1;
+  cursor: pointer;
+}

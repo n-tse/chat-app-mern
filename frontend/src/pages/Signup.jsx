@@ -45,21 +45,22 @@ function Signup() {
               <h1 className='text-center'>Create an account</h1>
               <div className='signup-profile-picture-container'>
                 <img src={picturePreview || defaultPicture} className='signup-profile-picture'/>
+                {hasPicture && <div className='edit-image-textprompt' onClick={() => alert('clicked')}>Edit Image</div>}
                 <label htmlFor='image-upload' className='image-upload-label'>{!hasPicture && <BsCloudUploadFill className='upload-picture-icon'/>}</label>
-                <input type='file' id='image-upload' hidden accept='image/png, image/jpeg, image/jpg' onChange={validateImg} />
+                <input type='file' id='image-upload' hidden accept='image/png, image/jpeg, image/jpg' onChange={validateImg}/>
               </div>
               <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleChange}/>
+              <Form.Control type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleChange} required/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" name="email" value={formData.email} onChange={handleChange}/>
+              <Form.Control type="email" placeholder="Enter email" name="email" value={formData.email} onChange={handleChange} required/>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange}/>
+              <Form.Control type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} required/>
             </Form.Group>
             <Button variant="primary" type="submit" className='mt-1'>
               Sign Up
