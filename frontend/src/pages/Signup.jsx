@@ -140,7 +140,7 @@ function Signup() {
             />
           </Form.Group>
           <Button variant="primary" type="submit" className="mt-1">
-            Sign Up
+            {isImageUploading ? "Creating your account..." : "Sign up"}
           </Button>
           <div className="py-3">
             <p className="text-center">
