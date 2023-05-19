@@ -5,9 +5,6 @@ import "./css/Signup.css"
 import defaultPicture from "../assets/default-avatar-profile-icon.jpg";
 import { BsCloudUploadFill } from 'react-icons/bs';
 
-const validateImg = () => {
-
-}
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -15,6 +12,21 @@ function Signup() {
     email: "",
     password: ""
   })
+
+  const [profilePic, setProfilePic] = useState(null);
+  const [picturePreview, setPicturePreview] = useState(null);
+  const [hasPicture, setHasPicture] = useState(false);
+  
+  const validateImg = (e) => {
+    const file = e.target.files[0];
+    if (file.size >= 1048576) { //1mb
+      return alert('Max file size exceeded (1mb)');
+    } else {
+      setHasPicture(true);
+      setProfilePic(file);
+      setPicturePreview(URL.createObjectURL(file));
+    }
+  }
 
   const handleChange = ({target}) => {
     setFormData({...formData, [target.name]: target.value})
@@ -32,8 +44,8 @@ function Signup() {
           <Form style={{width:"70%"}} onSubmit={handleSignup}>
               <h1 className='text-center'>Create an account</h1>
               <div className='signup-profile-picture-container'>
-                <img src={defaultPicture} className='signup-profile-picture' />
-                <label htmlFor='image-upload' className='image-upload-label'><BsCloudUploadFill className='upload-picture-icon'/></label>
+                <img src={picturePreview || defaultPicture} className='signup-profile-picture'/>
+                <label htmlFor='image-upload' className='image-upload-label'>{!hasPicture && <BsCloudUploadFill className='upload-picture-icon'/>}</label>
                 <input type='file' id='image-upload' hidden accept='image/png, image/jpeg, image/jpg' onChange={validateImg} />
               </div>
               <Form.Group className="mb-3" controlId="formBasicName">
