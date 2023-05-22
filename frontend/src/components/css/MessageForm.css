@@ -1,0 +1,12 @@
+.messages-window {
+  height: 80vh;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow-y: scroll;
+  margin: 1rem 0;
+  padding: 0.5rem;
+}
+
+.messages-window::-webkit-scrollbar{
+  display: none;
+}
