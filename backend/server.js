@@ -8,6 +8,8 @@ app.use(express.urlencoded({extended: true})); // 'extended: true' for receiving
 app.use(express.json());
 app.use(cors()); // allows front and back end to communicate
 
+require('./db');
+
 const server = require('http').createServer(app); // 'http' comes with node environment by default
 const PORT = 5001;
 const io = require('socket.io')(server, {
