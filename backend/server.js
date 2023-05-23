@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const userRoutes = require('./routes/userRoutes');
 
 const rooms = ['general', 'work', 'fun/games', 'random'];
 const cors = require('cors');
@@ -8,6 +9,7 @@ app.use(express.urlencoded({extended: true})); // 'extended: true' for receiving
 app.use(express.json());
 app.use(cors()); // allows front and back end to communicate
 
+app.use('/users', userRoutes)
 require('./db');
 
 const server = require('http').createServer(app); // 'http' comes with node environment by default
