@@ -1,6 +1,6 @@
 // for user state management
 import { createSlice } from '@reduxjs/toolkit';
-import appApi from '../services/appAPI';
+import appApi from '../services/appApi';
 
 export const userSlice = createSlice({
   name: 'user',
