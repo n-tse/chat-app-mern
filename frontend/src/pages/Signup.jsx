@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./css/Signup.css";
 import defaultPicture from "../assets/default-avatar-profile-icon.jpg";
 import { BsCloudUploadFill } from "react-icons/bs";
@@ -16,6 +16,8 @@ function Signup() {
   });
 
   const [signupUser, { isLoading, error }] = useSignupUserMutation();
+
+  const navigate = useNavigate();
 
   const [profilePic, setProfilePic] = useState(null);
   const [picturePreview, setPicturePreview] = useState(null);
@@ -76,6 +78,7 @@ function Signup() {
     signupUser({ name, email, password, picture: url }).then(({ data }) => {
       if (data) {
         console.log(data);
+        navigate("/chat");
       }
     });
   };
