@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const userRoutes = require('./routes/userRoutes');
 const User = require('./models/User');
+const Message = require('./models/Message');
 
 const rooms = ['general', 'work', 'fun/games', 'random'];
 const cors = require('cors');
@@ -61,6 +62,10 @@ io.on('connection', (socket) => {
     // send back to client by emitting an event, since sockets listen for events
     socket.emit('room-messages', roomMessages)
   })
+})
+
+app.get('/rooms', (req, res) => {
+  res.json(rooms);
 })
 
 server.listen(PORT, () => {
