@@ -25,12 +25,12 @@ function MessageForm() {
                 type="text"
                 placeholder="Type a message..."
                 disabled={!user}
-                id={!user && "no-user"}
+                id={!user ? "no-user" : ""}
               ></Form.Control>
             </Form.Group>
           </Col>
           <Col sm={1}>
-            <span id={!user && "no-user"}>
+            <span id={!user ? "no-user" : ""}>
               <Button
                 type="submit"
                 style={{ backgroundColor: "blueviolet" }}
