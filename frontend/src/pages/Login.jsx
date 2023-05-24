@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../services/appApi";
 import "./css/Login.css";
+import { AppContext } from "../context/appContext";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ function Login() {
     password: "",
   });
   const navigate = useNavigate();
+  const { socket } = useContext(AppContext);
   const [loginUser, { isLoading, error }] = useLoginUserMutation();
 
   const handleChange = (e) => {
@@ -26,6 +28,7 @@ function Login() {
     loginUser({email, password}).then(({data}) => {
       if (data) {
         console.log(data);
+        socket.emit('new-user')
         navigate("/chat");
       }
     })
