@@ -10,3 +10,7 @@
 .messages-window::-webkit-scrollbar{
   display: none;
 }
+
+#no-user:hover {
+  cursor: not-allowed;
+}
