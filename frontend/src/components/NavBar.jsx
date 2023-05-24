@@ -6,10 +6,19 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
 import chatapplogo from "../assets/chatapplogo.png";
 import { useSelector } from "react-redux";
+import { useLogoutUserMutation } from "../services/appApi";
 
 function NavBar() {
   // useSelector allows us to have access to our state
   const user = useSelector((state) => state.user);
+  const [logoutUser] = useLogoutUserMutation();
+
+  const handleLogout = async () => {
+    await logoutUser(user);
+    // navigate back to home page
+    window.location.replace("/");
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -26,9 +35,14 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {!user && (
-              <LinkContainer to="/login">
-                <Nav.Link>Log In</Nav.Link>
-              </LinkContainer>
+              <>
+                <LinkContainer to="/login">
+                  <Nav.Link>Log In</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/signup">
+                  <Nav.Link>Sign up</Nav.Link>
+                </LinkContainer>
+              </>
             )}
             <LinkContainer to="/chat">
               <Nav.Link>Chat</Nav.Link>
@@ -36,8 +50,8 @@ function NavBar() {
             {user && (
               <NavDropdown
                 title={
-                  <>
-                    {user.name}{" "}
+                  <div style={{display:"inline-flex" , alignItems:"center"}}>
+                    {user.name}
                     <img
                       src={user.picture}
                       style={{
@@ -45,9 +59,10 @@ function NavBar() {
                         width: 25,
                         objectFit: "cover",
                         borderRadius: "50%",
+                        marginLeft: 5
                       }}
                     />
-                  </>
+                  </div>
                 }
                 id="basic-nav-dropdown"
               >
@@ -59,8 +74,8 @@ function NavBar() {
                   Something
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
+                <NavDropdown.Item onClick={() => alert("logged out")}>
+                  Logout
                 </NavDropdown.Item>
               </NavDropdown>
             )}
