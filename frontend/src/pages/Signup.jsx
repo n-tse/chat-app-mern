@@ -5,12 +5,17 @@ import "./css/Signup.css";
 import defaultPicture from "../assets/default-avatar-profile-icon.jpg";
 import { BsCloudUploadFill } from "react-icons/bs";
 
+// like a hook that gives us a signup function and an object with the loading state
+import { useSignupUserMutation } from "../services/appApi";
+
 function Signup() {
   const [formData, setFormData] = useState({
     name: "Abc",
     email: "test@example.com",
     password: "abc",
   });
+
+  const [signupUser, { isLoading, error }] = useSignupUserMutation();
 
   const [profilePic, setProfilePic] = useState(null);
   const [picturePreview, setPicturePreview] = useState(null);
@@ -35,31 +40,44 @@ function Signup() {
 
   const uploadImage = async () => {
     const data = new FormData();
-    data.append('file', profilePic);
-    data.append('upload_preset', 'wlormaj2');
+    data.append("file", profilePic);
+    data.append("upload_preset", "wlormaj2");
     try {
       setIsImageUploading(true);
-      let res = await fetch('https://api.cloudinary.com/v1_1/dvscluwbp/image/upload', {
-        method: 'post',
-        body: data
-      })
+      let res = await fetch(
+        "https://api.cloudinary.com/v1_1/dvscluwbp/image/upload",
+        {
+          method: "post",
+          body: data,
+        }
+      );
       const urlData = await res.json();
       setIsImageUploading(false);
-      return urlData.url
-    } catch(e) {
+      return urlData.url;
+    } catch (e) {
       setIsImageUploading(false);
       console.log(e);
     }
-  }
+  };
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    if(!profilePic) return alert('Please add a profile picture');
+    if (!profilePic) return alert("Please add a profile picture");
     const url = await uploadImage(profilePic);
-    console.log("cloudinary image upload url:", url)
-    alert(
-      `signed up with: name ${formData.name}, email ${formData.email}, password ${formData.password}`
-    );
+    console.log("cloudinary image upload url:", url);
+    // alert(
+    //   `signed up with: name ${formData.name}, email ${formData.email}, password ${formData.password}`
+    // );
+
+    // sign up the user
+    const name = formData.name;
+    const email = formData.email;
+    const password = formData.password;
+    signupUser({ name, email, password, picture: url }).then(({ data }) => {
+      if (data) {
+        console.log(data);
+      }
+    });
   };
 
   return (
