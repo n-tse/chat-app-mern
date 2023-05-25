@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import { AppContext } from "../context/appContext";
+import { addNotifications, resetNotifications } from '../features/userSlice';
 import "./css/Sidebar.css";
 
 function Sidebar() {
@@ -17,6 +18,7 @@ function Sidebar() {
     setPrivateMemberMsg,
   } = useContext(AppContext);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user) {
@@ -33,6 +35,12 @@ function Sidebar() {
     if(isPublic) {
       setPrivateMemberMsg(null);
     }
+    // upon entering room, dispatch redux action to reset notifications
+    dispatch(resetNotifications(room));
+
+    socket.off('notifications').on('notifications', (room) => {
+      dispatch(addNotifications(room));
+    })
   }
 
   socket.off("new-user").on("new-user", (payload) => {
@@ -66,7 +74,7 @@ function Sidebar() {
         <h2>Rooms</h2>
         <ListGroup>
           {rooms.map((room, idx) => (
-            <ListGroup.Item key={idx} style={{cursor:"pointer", backgroundColor: room === currentRoom ? 'turquoise' : 'inherit', color: room === currentRoom ? 'white' : 'inherit'}} onClick={() => joinRoom(room)}>{room}</ListGroup.Item>
+            <ListGroup.Item key={idx} style={{cursor:"pointer", backgroundColor: room === currentRoom ? 'turquoise' : 'inherit', color: room === currentRoom ? 'white' : 'inherit'}} onClick={() => joinRoom(room)}>{room} {currentRoom !== room && <span className="badge rounded-pill bg-danger">{user.newMessages[room]}</span>}</ListGroup.Item>
           ))}
         </ListGroup>
       </div>
