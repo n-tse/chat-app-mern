@@ -36,7 +36,6 @@ function Login() {
 
   return (
     <Row>
-      {console.log(formData)}
       <Col md={6} className="login__background"></Col>
       <Col
         md={6}
