@@ -29,7 +29,6 @@ const getLastMessagesFromRoom = async(room) => {
 }
 
 const sortRoomMessagesByDate = (messages) => {
-  console.log('messages:', messages);
   return messages.sort((a, b) => {
     let date1 = a._id.split('/');
     let date2 = b._id.split('/');
@@ -62,6 +61,13 @@ io.on('connection', (socket) => {
     roomMessages = sortRoomMessagesByDate(roomMessages);
     // send back to client by emitting an event, since sockets listen for events
     socket.emit('room-messages', roomMessages)
+  })
+
+  socket.on('new-room-message', async(room, content, sender, time, date) => {
+    const newMessage = await Message.create({content, from: sender, time, date, to: room});
+    let roomMessages = await getLastMessagesFromRoom(room);
+    io.to(room).emit('room-messages', roomMessages);
+    socket.broadcast.emit('notifications', room);
   })
 })
 
