@@ -39,15 +39,15 @@ function MessageForm() {
   // helps to prevent potential issues eg: multiple event handlers being triggered for the same event
   // ensures that only the latest event listener is active for that event
   socket.off('room-messages').on('room-messages', (roomMessages) => {
-    console.log(roomMessages);
+    // console.log('roomMessages', roomMessages);
     setMessages(roomMessages);
   })
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!message) return;
-    console.log(e.target[0].value);
-    console.log(getCurrentTime());
+    // console.log(e.target[0].value);
+    // console.log(getCurrentTime());
     socket.emit('new-room-message', currentRoom, message, user, getCurrentTime(), getTodaysDate())
     setMessage("");
   };
