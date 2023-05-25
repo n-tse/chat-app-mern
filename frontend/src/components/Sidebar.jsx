@@ -46,13 +46,27 @@ function Sidebar() {
       .then((data) => setRooms(data));
   }
 
+  const orderIds = (id1, id2) => {
+    if (id1 > id2) {
+      return id1 + "-" + id2;
+    } else {
+      return id2 + "-" + id1;
+    }
+  }
+
+  const handlePrivateMemberMsg = (member) => {
+    setPrivateMemberMsg(member);
+    const roomId = orderIds(user._id, member._id);
+    joinRoom(roomId, false)
+  }
+
   return (
     <div className="sidebar-container">
       <div className="group-section">
         <h2>Rooms</h2>
         <ListGroup>
           {rooms.map((room, idx) => (
-            <ListGroup.Item key={idx} style={{cursor:"pointer"}} onClick={() => joinRoom(room)} active={room === currentRoom}>{room}</ListGroup.Item>
+            <ListGroup.Item key={idx} style={{cursor:"pointer", backgroundColor: room === currentRoom ? 'turquoise' : 'inherit', color: room === currentRoom ? 'white' : 'inherit'}} onClick={() => joinRoom(room)}>{room}</ListGroup.Item>
           ))}
         </ListGroup>
       </div>
@@ -60,7 +74,7 @@ function Sidebar() {
         <h2>Members</h2>
         <ListGroup>
           {members.map((member, idx) => (
-            <ListGroup.Item key={idx} style={{ cursor: "pointer" }}>
+            <ListGroup.Item key={idx} style={{cursor: "pointer", backgroundColor: privateMemberMsg?._id === member?._id ? 'turquoise' : 'inherit', color: privateMemberMsg?._id === member?._id ? 'white' : 'inherit'}} onClick={() => handlePrivateMemberMsg(member)}>
               {member.name}
             </ListGroup.Item>
           ))}
