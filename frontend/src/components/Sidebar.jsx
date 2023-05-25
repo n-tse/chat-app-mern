@@ -27,6 +27,14 @@ function Sidebar() {
     }
   }, []);
 
+  const joinRoom = (room, isPublic = true) => {
+    socket.emit('join-room', room);
+    setCurrentRoom(room);
+    if(isPublic) {
+      setPrivateMemberMsg(null);
+    }
+  }
+
   socket.off("new-user").on("new-user", (payload) => {
     // console.log("payload:", payload);
     setMembers(payload);
@@ -44,7 +52,7 @@ function Sidebar() {
         <h2>Rooms</h2>
         <ListGroup>
           {rooms.map((room, idx) => (
-            <ListGroup.Item key={idx}>{room}</ListGroup.Item>
+            <ListGroup.Item key={idx} style={{cursor:"pointer"}} onClick={() => joinRoom(room)} active={room === currentRoom}>{room}</ListGroup.Item>
           ))}
         </ListGroup>
       </div>
