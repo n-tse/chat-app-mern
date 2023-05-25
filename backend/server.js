@@ -23,16 +23,13 @@ const io = require('socket.io')(server, {
   }
 })
 
-app.get('/rooms', (req, res) => {
-  res.json(rooms);
-})
-
 const getLastMessagesFromRoom = async(room) => {
   let roomMessages = await Message.aggregate([{$match: {to: room}}, {$group: {_id: '$date', messagesByDate: {$push: '$$ROOT'}}}])
   return roomMessages;
 }
 
 const sortRoomMessagesByDate = (messages) => {
+  console.log('messages:', messages);
   return messages.sort((a, b) => {
     let date1 = a._id.split('/');
     let date2 = b._id.split('/');
@@ -51,8 +48,12 @@ const sortRoomMessagesByDate = (messages) => {
 io.on('connection', (socket) => {
 
   socket.on('new-user', async() => {
-    const members = await User.find();
-    io.emit('new-user', members);
+    try {
+      const members = await User.find();
+      io.emit('new-user', members);
+    } catch(e) {
+      console.log(e);
+    }
   })
 
   socket.on('join-room', async(room) => {
