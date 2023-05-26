@@ -58,7 +58,7 @@ function MessageForm() {
         {!user && <div className="alert alert-danger">Please log in</div>}
         {user && messages.map(({ _id: date, messagesByDate }, idx) => (
           <div key={idx}>
-            <p className="alert alert-info text-center message-date-indicator">{date}</p>
+            <p className="message-date-indicator">{date}</p>
             {messagesByDate?.map(({content, time, from: sender}, msgIdx) => (
               <div className={sender._id === user._id ? 'your-message' : 'their-message'} key={msgIdx}>
                 <div className="sender-container">

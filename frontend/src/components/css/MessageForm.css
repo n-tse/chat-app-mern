@@ -68,3 +68,12 @@
   align-items: center;
   margin-bottom: 2px;
 }
+
+.message-date-indicator {
+  width: fit-content;
+  margin: 0 auto;
+  background-color: #ddd;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
