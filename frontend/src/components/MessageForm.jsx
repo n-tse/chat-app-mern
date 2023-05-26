@@ -60,8 +60,15 @@ function MessageForm() {
           <div key={idx}>
             <p className="alert alert-info text-center message-date-indicator">{date}</p>
             {messagesByDate?.map(({content, time, from: sender}, msgIdx) => (
-              <div className="message" key={msgIdx}>
-                <p>{content}</p>
+              <div className={sender._id === user._id ? 'your-message' : 'their-message'} key={msgIdx}>
+                <div className="sender-container">
+                  <img src={sender.picture} style={{width:25, height:25, objectFit:"cover", borderRadius:"50%"}} />
+                  <p className="message-sender">{sender._id === user?._id ? "You" : sender.name}</p>
+                </div>
+                <div className="message">
+                <p className="message-content">{content}</p>
+                <p className="message-time-stamp">{time}</p>
+                </div>
               </div>
             ))}
           </div>

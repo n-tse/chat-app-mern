@@ -14,3 +14,57 @@
 #no-user:hover {
   cursor: not-allowed;
 }
+
+.your-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0.5rem;
+}
+
+.your-message .message {
+  background-color: rgb(212, 166, 255);
+  width: fit-content;
+  border-radius: 10px;
+  padding: 0 8px;
+}
+
+.their-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem;
+}
+
+.their-message .message {
+  background-color:rgb(119, 255, 241);
+  width: fit-content;
+  border-radius: 10px;
+  padding: 0 8px;
+}
+
+.message {
+  width: fit-content;
+  border-radius: 10px;
+  padding: 0 8px;
+}
+
+.message-content {
+  margin: 0;
+}
+
+.message-time-stamp {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 300;
+}
+
+.message-sender {
+  margin: 4px;
+}
+
+.sender-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
