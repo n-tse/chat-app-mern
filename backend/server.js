@@ -55,8 +55,9 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('join-room', async(room) => {
+  socket.on('join-room', async(room, prevRoom) => {
     socket.join(room);
+    socket.leave(prevRoom);
     let roomMessages = await getLastMessagesFromRoom(room);
     roomMessages = sortRoomMessagesByDate(roomMessages);
     // send back to client by emitting an event, since sockets listen for events

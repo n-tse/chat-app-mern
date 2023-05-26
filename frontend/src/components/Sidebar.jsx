@@ -30,7 +30,7 @@ function Sidebar() {
   }, []);
 
   const joinRoom = (room, isPublic = true) => {
-    socket.emit('join-room', room);
+    socket.emit('join-room', room, currentRoom);
     setCurrentRoom(room);
     if(isPublic) {
       setPrivateMemberMsg(null);
