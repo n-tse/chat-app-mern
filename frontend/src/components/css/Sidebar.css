@@ -1,3 +1,31 @@
 .group-section {
   margin: 0.5rem 0 1rem;
 }
+
+.member-status {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.member-status-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sidebar-online-status {
+  color:forestgreen;
+}
+
+.sidebar-offline-status {
+  color:orange ;
+}
+
+.sidebar-offline-status, .sidebar-online-status {
+  font-size: 12px;
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  z-index: 1;
+}

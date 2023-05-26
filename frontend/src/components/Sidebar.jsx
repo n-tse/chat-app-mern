@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ListGroup } from "react-bootstrap";
+import { Col, ListGroup, Row } from "react-bootstrap";
 import { AppContext } from "../context/appContext";
 import { addNotifications, resetNotifications } from '../features/userSlice';
 import "./css/Sidebar.css";
+import defaultPicture from "../assets/default-avatar-profile-icon.jpg";
+import { BsFillCircleFill } from 'react-icons/bs'
 
 function Sidebar() {
   const {
@@ -54,6 +56,7 @@ function Sidebar() {
       .then((data) => setRooms(data));
   }
 
+  // so that room id's match regardless of which user opens the DM
   const orderIds = (id1, id2) => {
     if (id1 > id2) {
       return id1 + "-" + id2;
@@ -83,7 +86,19 @@ function Sidebar() {
         <ListGroup>
           {members.map((member, idx) => (
             <ListGroup.Item key={idx} style={{cursor: "pointer", backgroundColor: privateMemberMsg?._id === member?._id ? 'turquoise' : 'inherit', color: privateMemberMsg?._id === member?._id ? 'white' : 'inherit'}} onClick={() => handlePrivateMemberMsg(member)}>
-              {member.name}
+              <Row>
+                <Col xs={2} className="member-status">
+                  <img src={member.picture || defaultPicture} className="member-status-img" />
+                  {member.status === "online" ? <BsFillCircleFill className="sidebar-online-status"/>: <BsFillCircleFill className="sidebar-offline-status"/>}
+                </Col>
+                <Col xs={10}>
+                  {member.name}
+                  {" "}
+                  {member._id === user._id && " (You)"}
+                  {member.status === "offline" && " (Offline)"}
+                  <span className="badge rounded-pill bg-danger">{user.newMessages[orderIds(member._id, user._id)]}</span>
+                </Col>
+              </Row>
             </ListGroup.Item>
           ))}
         </ListGroup>
