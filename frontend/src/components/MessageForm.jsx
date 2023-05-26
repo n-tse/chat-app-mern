@@ -8,19 +8,20 @@ import { AppContext } from "../context/appContext";
 function MessageForm() {
   const user = useSelector((state) => state.user);
   const [message, setMessage] = useState("");
-  const { socket, currentRoom, messages, setMessages, privateMemberMsg } = useContext(AppContext);
+  const { socket, currentRoom, messages, setMessages, privateMemberMsg } =
+    useContext(AppContext);
 
   const getTodaysDate = () => {
     const date = new Date();
     // console.log(date);
     const year = date.getFullYear();
-    let month = (1+date.getMonth()).toString();
-    month = month.length > 1 ? month : '0' + month;
+    let month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : "0" + month;
     let day = date.getDate().toString();
     day = day.length > 1 ? day : "0" + day;
     // console.log(month + "/" + day + "/" + year)
     return month + "/" + day + "/" + year;
-  }
+  };
 
   const getCurrentTime = () => {
     const today = new Date();
@@ -32,23 +33,30 @@ function MessageForm() {
 
     const time = `${hours}:${minutes} ${amOrPm}`;
     return time;
-  }
+  };
 
   // 'off' removes any existing event listeners from 'room-messages' event
   // 'on' attaches a fresh event listener
   // helps to prevent potential issues eg: multiple event handlers being triggered for the same event
   // ensures that only the latest event listener is active for that event
-  socket.off('room-messages').on('room-messages', (roomMessages) => {
+  socket.off("room-messages").on("room-messages", (roomMessages) => {
     // console.log('roomMessages', roomMessages);
     setMessages(roomMessages);
-  })
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!message) return;
     // console.log(e.target[0].value);
     // console.log(getCurrentTime());
-    socket.emit('new-room-message', currentRoom, message, user, getCurrentTime(), getTodaysDate())
+    socket.emit(
+      "new-room-message",
+      currentRoom,
+      message,
+      user,
+      getCurrentTime(),
+      getTodaysDate()
+    );
     setMessage("");
   };
 
@@ -56,23 +64,56 @@ function MessageForm() {
     <div className="message-form-container">
       <div className="messages-window">
         {!user && <div className="alert alert-danger">Please log in</div>}
-        {user && messages.map(({ _id: date, messagesByDate }, idx) => (
-          <div key={idx}>
-            <p className="message-date-indicator">{date}</p>
-            {messagesByDate?.map(({content, time, from: sender}, msgIdx) => (
-              <div className={sender._id === user._id ? 'your-message' : 'their-message'} key={msgIdx}>
-                <div className="sender-container">
-                  <img src={sender.picture} style={{width:25, height:25, objectFit:"cover", borderRadius:"50%"}} />
-                  <p className="message-sender">{sender._id === user?._id ? "You" : sender.name}</p>
-                </div>
-                <div className="message">
-                <p className="message-content">{content}</p>
-                <p className="message-time-stamp">{time}</p>
-                </div>
-              </div>
-            ))}
+        {user && privateMemberMsg?._id && (
+          <div className="alert alert-info d-flex">
+            Your direct messages with {privateMemberMsg.name}
+            <img
+              src={privateMemberMsg.picture}
+              style={{
+                width: 25,
+                height: 25,
+                objectFit: "cover",
+                borderRadius: "50%",
+                marginLeft: 5
+              }}
+            />
           </div>
-        ))}
+        )}
+        {user &&
+          messages.map(({ _id: date, messagesByDate }, idx) => (
+            <div key={idx}>
+              <p className="message-date-indicator">{date}</p>
+              {messagesByDate?.map(
+                ({ content, time, from: sender }, msgIdx) => (
+                  <div
+                    className={
+                      sender._id === user._id ? "your-message" : "their-message"
+                    }
+                    key={msgIdx}
+                  >
+                    <div className="sender-container">
+                      <img
+                        src={sender.picture}
+                        style={{
+                          width: 25,
+                          height: 25,
+                          objectFit: "cover",
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <p className="message-sender">
+                        {sender._id === user?._id ? "You" : sender.name}
+                      </p>
+                    </div>
+                    <div className="message">
+                      <p className="message-content">{content}</p>
+                      <p className="message-time-stamp">{time}</p>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          ))}
       </div>
       <Form onSubmit={handleSubmit}>
         <Row style={{ width: "100%", margin: "auto" }}>

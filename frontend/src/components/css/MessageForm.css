@@ -24,9 +24,6 @@
 
 .your-message .message {
   background-color: rgb(212, 166, 255);
-  width: fit-content;
-  border-radius: 10px;
-  padding: 0 8px;
 }
 
 .their-message {
@@ -38,15 +35,13 @@
 
 .their-message .message {
   background-color:rgb(119, 255, 241);
-  width: fit-content;
-  border-radius: 10px;
-  padding: 0 8px;
 }
 
 .message {
   width: fit-content;
+  max-width: 75%;
   border-radius: 10px;
-  padding: 0 8px;
+  padding: 4px 8px;
 }
 
 .message-content {
