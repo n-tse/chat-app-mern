@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { BsFillSendFill } from "react-icons/bs";
 import "./css/MessageForm.css";
+import defaultPicture from "../assets/default-avatar-profile-icon.jpg";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 
@@ -75,7 +76,7 @@ function MessageForm() {
           <div className="alert alert-info d-flex">
             Your direct messages with {privateMemberMsg.name}
             <img
-              src={privateMemberMsg.picture}
+              src={privateMemberMsg.picture || defaultPicture}
               style={{
                 width: 25,
                 height: 25,
@@ -100,7 +101,7 @@ function MessageForm() {
                   >
                     <div className="sender-container">
                       <img
-                        src={sender.picture}
+                        src={sender.picture || defaultPicture}
                         style={{
                           width: 25,
                           height: 25,

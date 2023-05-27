@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
 import chatapplogo from "../assets/chatapplogo.png";
+import defaultPicture from "../assets/default-avatar-profile-icon.jpg";
 import { useSelector } from "react-redux";
 import { useLogoutUserMutation } from "../services/appApi";
 
@@ -53,7 +54,7 @@ function NavBar() {
                   <div style={{display:"inline-flex" , alignItems:"center"}}>
                     {user.name}
                     <img
-                      src={user.picture}
+                      src={user.picture || defaultPicture}
                       style={{
                         height: 25,
                         width: 25,
