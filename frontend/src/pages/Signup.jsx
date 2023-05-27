@@ -64,8 +64,11 @@ function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (!profilePic) return alert("Please add a profile picture");
-    const url = await uploadImage(profilePic);
+    if (!profilePic) {
+      const shouldContinue = confirm("No profile picture was added. Continue?");
+      if(!shouldContinue) return;
+    }
+    const url = await uploadImage(profilePic || defaultPicture);
     console.log("cloudinary image upload url:", url);
     // alert(
     //   `signed up with: name ${formData.name}, email ${formData.email}, password ${formData.password}`
@@ -92,6 +95,7 @@ function Signup() {
       >
         <Form style={{ width: "70%" }} onSubmit={handleSignup}>
           <h1 className="text-center">Create an account</h1>
+          {error && <p className="alert alert-danger text-center">{error.data}</p>}
           <div className="signup-profile-picture-container">
             <img
               src={picturePreview || defaultPicture}

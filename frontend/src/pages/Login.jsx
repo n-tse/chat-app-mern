@@ -44,6 +44,7 @@ function Login() {
         <Form style={{ width: "70%" }} onSubmit={handleSubmit}>
           <h1 className="text-center">Log In</h1>
           <Form.Group className="mb-3" controlId="formBasicEmail">
+            {error && <p className="alert alert-danger text-center">{error.data}</p>}
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"
@@ -67,7 +68,7 @@ function Login() {
             />
           </Form.Group>
           <Button variant="primary" type="submit" className="mt-1">
-            Log In
+            {isLoading ? "Logging in..." : "Log In"}
           </Button>
           <div className="py-3">
             <p className="text-center">
