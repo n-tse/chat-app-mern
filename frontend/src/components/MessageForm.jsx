@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { BsFillSendFill } from "react-icons/bs";
 import "./css/MessageForm.css";
@@ -10,6 +10,13 @@ function MessageForm() {
   const [message, setMessage] = useState("");
   const { socket, currentRoom, messages, setMessages, privateMemberMsg } =
     useContext(AppContext);
+  const latestMessageRef = useRef(null);
+
+  const scrollToBottom = () => {
+    latestMessageRef.current?.scrollIntoView({ behavior: "instant"});
+  }
+
+  useEffect(() => scrollToBottom(), [messages]);
 
   const getTodaysDate = () => {
     const date = new Date();
@@ -114,6 +121,7 @@ function MessageForm() {
               )}
             </div>
           ))}
+          <div ref={latestMessageRef}/>
       </div>
       <Form onSubmit={handleSubmit}>
         <Row style={{ width: "100%", margin: "auto" }}>
