@@ -5,7 +5,7 @@
 }
 
 .messages-window {
-  /* height: 80vh; */
+  height: 100%;
   border: 1px solid #ccc;
   border-radius: 6px;
   overflow-y: scroll;
