@@ -10,9 +10,9 @@ import { useSignupUserMutation } from "../services/appApi";
 
 function Signup() {
   const [formData, setFormData] = useState({
-    name: "Abc",
-    email: "test@example.com",
-    password: "abc",
+    name: "",
+    email: "",
+    password: "",
   });
 
   const [signupUser, { isLoading, error }] = useSignupUserMutation();

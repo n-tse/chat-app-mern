@@ -5,6 +5,7 @@
 .member-status {
   margin-bottom: 0;
   position: relative;
+  width: 30px;
 }
 
 .member-status-img {
@@ -26,6 +27,6 @@
   font-size: 12px;
   position: absolute;
   top: 20px;
-  right: 25px;
+  right: -2px;
   z-index: 1;
 }

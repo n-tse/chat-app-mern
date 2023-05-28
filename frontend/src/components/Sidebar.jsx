@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, ListGroup, Row } from "react-bootstrap";
 import { AppContext } from "../context/appContext";
-import { addNotifications, resetNotifications } from '../features/userSlice';
+import { addNotifications, resetNotifications } from "../features/userSlice";
 import "./css/Sidebar.css";
 import defaultPicture from "../assets/default-avatar-profile-icon.jpg";
-import { BsFillCircleFill } from 'react-icons/bs'
+import { BsFillCircleFill } from "react-icons/bs";
 
 function Sidebar() {
   const {
@@ -32,18 +32,18 @@ function Sidebar() {
   }, []);
 
   const joinRoom = (room, isPublic = true) => {
-    socket.emit('join-room', room, currentRoom);
+    socket.emit("join-room", room, currentRoom);
     setCurrentRoom(room);
-    if(isPublic) {
+    if (isPublic) {
       setPrivateMemberMsg(null);
     }
     // upon entering room, dispatch redux action to reset notifications
     dispatch(resetNotifications(room));
 
-    socket.off('notifications').on('notifications', (room) => {
+    socket.off("notifications").on("notifications", (room) => {
       dispatch(addNotifications(room));
-    })
-  }
+    });
+  };
 
   socket.off("new-user").on("new-user", (payload) => {
     // console.log("payload:", payload);
@@ -63,13 +63,13 @@ function Sidebar() {
     } else {
       return id2 + "-" + id1;
     }
-  }
+  };
 
   const handlePrivateMemberMsg = (member) => {
     setPrivateMemberMsg(member);
     const roomId = orderIds(user._id, member._id);
-    joinRoom(roomId, false)
-  }
+    joinRoom(roomId, false);
+  };
 
   return (
     <div className="sidebar-container">
@@ -77,7 +77,22 @@ function Sidebar() {
         <h2>Rooms</h2>
         <ListGroup>
           {rooms.map((room, idx) => (
-            <ListGroup.Item key={idx} style={{cursor:"pointer", backgroundColor: room === currentRoom ? 'turquoise' : 'inherit', color: room === currentRoom ? 'white' : 'inherit'}} onClick={() => joinRoom(room)}>{room} {currentRoom !== room && <span className="badge rounded-pill bg-danger">{user.newMessages[room]}</span>}</ListGroup.Item>
+            <ListGroup.Item
+              key={idx}
+              style={{
+                cursor: "pointer",
+                backgroundColor: room === currentRoom ? "turquoise" : "inherit",
+                color: room === currentRoom ? "white" : "inherit",
+              }}
+              onClick={() => joinRoom(room)}
+            >
+              {room}{" "}
+              {currentRoom !== room && (
+                <span className="badge rounded-pill bg-danger">
+                  {user.newMessages[room]}
+                </span>
+              )}
+            </ListGroup.Item>
           ))}
         </ListGroup>
       </div>
@@ -85,18 +100,39 @@ function Sidebar() {
         <h2>Members</h2>
         <ListGroup>
           {members.map((member, idx) => (
-            <ListGroup.Item key={idx} style={{cursor: "pointer", backgroundColor: privateMemberMsg?._id === member?._id ? 'turquoise' : 'inherit', color: privateMemberMsg?._id === member?._id ? 'white' : 'inherit'}} onClick={() => handlePrivateMemberMsg(member)}>
+            <ListGroup.Item
+              key={idx}
+              style={{
+                cursor: "pointer",
+                backgroundColor:
+                  privateMemberMsg?._id === member?._id
+                    ? "turquoise"
+                    : "inherit",
+                color:
+                  privateMemberMsg?._id === member?._id ? "white" : "inherit",
+              }}
+              onClick={() => handlePrivateMemberMsg(member)}
+            >
               <Row>
-                <Col xs={2} className="member-status">
-                  <img src={member.picture || defaultPicture} className="member-status-img" />
-                  {member.status === "online" ? <BsFillCircleFill className="sidebar-online-status"/>: <BsFillCircleFill className="sidebar-offline-status"/>}
+                <Col xs={2}>
+                  <div className="member-status">
+                    <img
+                      src={member.picture || defaultPicture}
+                      className="member-status-img"
+                    />
+                    {member.status === "online" ? (
+                      <BsFillCircleFill className="sidebar-online-status" />
+                    ) : (
+                      <BsFillCircleFill className="sidebar-offline-status" />
+                    )}
+                  </div>
                 </Col>
                 <Col xs={10}>
-                  {member.name}
-                  {" "}
-                  {member._id === user._id && " (You)"}
+                  {member.name} {member._id === user._id && " (You)"}
                   {member.status === "offline" && " (Offline)"}
-                  <span className="badge rounded-pill bg-danger">{user.newMessages[orderIds(member._id, user._id)]}</span>
+                  <span className="badge rounded-pill bg-danger">
+                    {user.newMessages[orderIds(member._id, user._id)]}
+                  </span>
                 </Col>
               </Row>
             </ListGroup.Item>

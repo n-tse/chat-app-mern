@@ -1,5 +1,11 @@
+.message-form-container {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .messages-window {
-  height: 80vh;
+  /* height: 80vh; */
   border: 1px solid #ccc;
   border-radius: 6px;
   overflow-y: scroll;
