@@ -66,6 +66,7 @@ function Sidebar() {
   };
 
   const handlePrivateMemberMsg = (member) => {
+    if (member?._id === user._id) return;
     setPrivateMemberMsg(member);
     const roomId = orderIds(user._id, member._id);
     joinRoom(roomId, false);
@@ -74,16 +75,16 @@ function Sidebar() {
   return (
     <div className="sidebar-container">
       <div className="group-section">
-        <h2>Rooms</h2>
-        <ListGroup>
+        <h2>Channels</h2>
+        <div className="group-display">
           {rooms.map((room, idx) => (
-            <ListGroup.Item
+            <div
               key={idx}
-              style={{
-                cursor: "pointer",
-                backgroundColor: room === currentRoom ? "turquoise" : "inherit",
-                color: room === currentRoom ? "white" : "inherit",
-              }}
+              className={
+                currentRoom === room
+                  ? "group-item-tab selected-item"
+                  : "group-item-tab other-item"
+              }
               onClick={() => joinRoom(room)}
             >
               {room}{" "}
@@ -92,52 +93,42 @@ function Sidebar() {
                   {user.newMessages[room]}
                 </span>
               )}
-            </ListGroup.Item>
+            </div>
           ))}
-        </ListGroup>
+        </div>
       </div>
       <div className="group-section">
-        <h2>Members</h2>
-        <ListGroup>
-          {members.map((member, idx) => (
-            <ListGroup.Item
-              key={idx}
-              style={{
-                cursor: "pointer",
-                backgroundColor:
-                  privateMemberMsg?._id === member?._id
-                    ? "turquoise"
-                    : "inherit",
-                color:
-                  privateMemberMsg?._id === member?._id ? "white" : "inherit",
-              }}
-              onClick={() => handlePrivateMemberMsg(member)}
-            >
-              <Row>
-                <Col xs={2}>
-                  <div className="member-status">
-                    <img
-                      src={member.picture || defaultPicture}
-                      className="member-status-img"
-                    />
-                    {member.status === "online" ? (
-                      <BsFillCircleFill className="sidebar-online-status" />
-                    ) : (
-                      <BsFillCircleFill className="sidebar-offline-status" />
-                    )}
-                  </div>
-                </Col>
-                <Col xs={10}>
-                  {member.name} {member._id === user._id && " (You)"}
-                  {member.status === "offline" && " (Offline)"}
-                  <span className="badge rounded-pill bg-danger">
-                    {user.newMessages[orderIds(member._id, user._id)]}
-                  </span>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+        <h2>People</h2>
+        <div className="group-display">
+          {members.map((member, idx) => {
+            return (
+              <div key={idx} className={privateMemberMsg?._id === member?._id ? "group-item-tab selected-item" : "group-item-tab other-item"} id={member?._id === user._id && "disable"} onClick={() => handlePrivateMemberMsg(member)}>
+                <Row>
+                  <Col xs={2}>
+                    <div className="member-status">
+                      <img
+                        src={member.picture || defaultPicture}
+                        className="member-status-img"
+                      />
+                      {member.status === "online" ? (
+                        <BsFillCircleFill className="sidebar-online-status" />
+                      ) : (
+                        <BsFillCircleFill className="sidebar-offline-status" />
+                      )}
+                    </div>
+                  </Col>
+                  <Col xs={10}>
+                    {member.name} {member._id === user._id && " (You)"}
+                    {member.status === "offline" && " (Offline)"}
+                    <span className="badge rounded-pill bg-danger">
+                      {user.newMessages[orderIds(member._id, user._id)]}
+                    </span>
+                  </Col>
+                </Row>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

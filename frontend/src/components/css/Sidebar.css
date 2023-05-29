@@ -30,3 +30,42 @@
   right: -2px;
   z-index: 1;
 }
+
+.group-display {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.group-item-tab {
+  cursor: pointer;
+  padding: 0.6rem 1.2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.other-item:hover {
+  background-color: #eee;
+}
+
+.group-item-tab:last-child {
+  border-bottom: none;
+}
+
+.selected-item {
+  background-color: turquoise;
+  color: white;
+}
+
+.selected-item:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.selected-item:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#disable {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
