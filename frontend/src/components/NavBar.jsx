@@ -29,7 +29,7 @@ function NavBar() {
               src={chatapplogo}
               style={{ width: 60, height: 60, margin: 5 }}
             />
-            My Chat App
+            Chatterbox
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
