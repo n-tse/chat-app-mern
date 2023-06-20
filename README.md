@@ -13,6 +13,16 @@ Chatterbox is a full-stack chat application that allows users to engage in real-
 - **Input & Form Validation:** Validate user input to ensure data integrity and provide a smooth user experience.
 - **Responsive design:** The app is fully responsive and operational regardless of screen size.
 
+## Demo
+### Sign up and Navigation
+
+https://github.com/n-tse/chat-app-mern/assets/101606128/c445a801-aee7-4832-851f-ef111707a408
+
+### User to User chatting
+
+https://github.com/n-tse/chat-app-mern/assets/101606128/a20e1106-dcf9-4b97-b106-965f5e4ca883
+
+
 ## Tech Stack
 
 Chatterbox is built with the following technologies:
